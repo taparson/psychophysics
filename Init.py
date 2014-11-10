@@ -1,9 +1,9 @@
 from bge import logic
 from random import randrange
 
-global positions = []
 
 def init():
+    positions = []
     arrayList = []
     array1 = [(50,1),(47,-5),(15,0.5),(60,-3),(20,-7),(35,6),(75,1)]
     array2 = [(50,-1),(53,5),(85,-0.5),(40,3),(80,7),(65,-6),(25,-1)]
@@ -58,6 +58,8 @@ def init():
         
     positions = finalRandList
     
+    logic.game_start = True
+    
     print("hello")
     
 def trial():
@@ -71,12 +73,12 @@ def trial():
     # and use it to get a list of the objects in the scene
     objList = scene.objects
     
-    currPositions = positions[logic.trial_number]
+    #currPositions = positions[logic.trial_number]
     
-    for i in range(7):
-        string = "Cylinder" + str(i+1) 
-        curr = objList[string]
-        (x,y) = currPositions[i]
-        obj.position = [x,y,0]
+    #for i in range(7):
+        #string = "Cylinder" + str(i+1) 
+        #curr = objList[string]
+        #(x,y) = currPositions[i]
+        #obj.position = [x,y,0]
         
-    logic.trial_number += 1
+    #logic.trial_number += 1
