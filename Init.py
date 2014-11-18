@@ -58,12 +58,16 @@ def init():
         
     positions = finalRandList
     
-    logic.game_start = True
+    logic.globalDict["positions"] = finalRandList
+    logic.globalDict["game_start"] = True
+    logic.globalDict["trial_number"] = 0
     
     print("hello")
     
 def trial():
-    
+    if not "game_start" in logic.globalDict:
+        return
+    print("meow")
     controller = logic.getCurrentController()
     obj = controller.owner
 
@@ -73,12 +77,13 @@ def trial():
     # and use it to get a list of the objects in the scene
     objList = scene.objects
     
-    #currPositions = positions[logic.trial_number]
+    currPositions = logic.globalDict["positions"]
+    currPositions = currPositions[logic.globalDict["trial_number"]]
     
-    #for i in range(7):
-        #string = "Cylinder" + str(i+1) 
-        #curr = objList[string]
-        #(x,y) = currPositions[i]
-        #obj.position = [x,y,0]
+    for i in range(7):
+        string = "Cylinder" + str(i+1) 
+        curr = objList[string]
+        (x,y) = currPositions[i]
+        obj.position = [x,y,0]
         
     #logic.trial_number += 1
