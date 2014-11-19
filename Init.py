@@ -3,6 +3,7 @@ from random import randrange
 
 
 def init():
+    logic.globalDict["saveString"] = '{"trials":['
     positions = []
     arrayList = []
     array1 = [(1,50),(-5,47),(.5,15),(-3,60),(-7,20),(6,35),(1,55)]
@@ -61,17 +62,43 @@ def init():
     logic.globalDict["positions"] = finalRandList
     logic.globalDict["game_start"] = True
     logic.globalDict["trial_number"] = 0
+    logic.globalDict["prev_time"] = 0
+    logic.globalDict["prev_pos"] = (0,0)
+    logic.globalDict["hacky_bool"] = True
+    logic.globalDict["freeze"] = True
     
     print("hello")
     trial()
     
 def trial():
+    if not logic.globalDict["hacky_bool"]:
+        logic.globalDict["hacky_bool"] = True
+        return
+    logic.globalDict["hacky_bool"] = False
+    if logic.globalDict["trial_number"] == 0:
+        logic.globalDict["hacky_bool"] = True
+    else:
+        s = logic.globalDict["saveString"]
+        logic.globalDict["saveString"] = s[:-1]
+        logic.globalDict["saveString"] += ']'
     if not "game_start" in logic.globalDict:
         return
-    print("meow")
+    logic.globalDict["trial_number"] += 1
+    if logic.globalDict["trial_number"] > 2:
+        logic.globalDict["saveString"] += '}]}'
+        f = open('output.json', 'a')
+        f.write(logic.globalDict["saveString"])
+        f.close()
+        logic.endGame()
+        return
     controller = logic.getCurrentController()
     obj = controller.owner
-
+    print("here! trial " + str(logic.globalDict["trial_number"])) 
+    if logic.globalDict["trial_number"] != 1:
+        logic.globalDict["saveString"] += '},'
+    logic.globalDict["saveString"] += '{"number":' + str(logic.globalDict["trial_number"]) + ','
+    logic.globalDict["saveString"] += '"obstacles": ['
+    
     # get the current scene
     scene = logic.getCurrentScene()
     
@@ -87,10 +114,29 @@ def trial():
         (x,y) = currPositions[i]
         curr.position = [x,y,0]
         curr.visible = False
+        logic.globalDict["saveString"] += '{"number": ' + str(i+1) + ',"location": [' + str(x) + ',' + str(y) + ']}'
+        if i != 6:
+            logic.globalDict["saveString"] += ','
+        test = "meow"       
+	
+    test = "woof"
+    logic.globalDict["saveString"] += '],'
+    logic.globalDict["saveString"] += '"output":['
         
     #objList["A1"].visible = False
     #print(objList["A1"].visible)
-    objList["Bounds"].position = [0,5,3]
-    objList["Body"].position = [0,5,2.76108]
+    objList["Bounds"].position = [0,0,3]
+    objList["Body"].position = [0,0,7]
+    objList["Body"].orientation = [0,0,0]
+    camera = objList["Camera"]
+    camera.orientation = [1.57,0,0]
         
-    logic.globalDict["trial_number"] += 1
+    logic.globalDict["prev_time"] = 0
+    logic.globalDict["prev_pos"] = (0,0)
+    camera["timer"] = 0
+    logic.globalDict["freeze"] = True
+    f = open('output.json','a')
+    f.write(logic.globalDict["saveString"])
+    f.close()
+    logic.globalDict["saveString"] = ""
+        
