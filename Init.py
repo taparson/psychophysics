@@ -1,8 +1,9 @@
 from bge import logic
 from random import randrange
-
+import random
 
 def init():
+    random.seed(0)
     logic.globalDict["saveString"] = '{"trials":['
     positions = []
     arrayList = []
