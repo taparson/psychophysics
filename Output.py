@@ -4,6 +4,7 @@ from random import randrange
 def outputData():
     if not "game_start" in logic.globalDict:
         return
+    
     control = logic.getCurrentController()
     camera = control.owner
     #print(camera.position)
@@ -15,7 +16,7 @@ def outputData():
     body = objList["Body"]
     
     if logic.globalDict["freeze"]:
-        if camera["timer"] > 5:
+        if camera["timer"] > 3:
             logic.globalDict["freeze"] = False
             camera["timer"] = 0
         body.position = [0,0,7]
