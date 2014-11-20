@@ -72,6 +72,7 @@ def init():
     trial()
     
 def trial():
+    logic.globalDict["freeze"] = True
     if not logic.globalDict["hacky_bool"]:
         logic.globalDict["hacky_bool"] = True
         return
@@ -135,7 +136,6 @@ def trial():
     logic.globalDict["prev_time"] = 0
     logic.globalDict["prev_pos"] = (0,0)
     camera["timer"] = 0
-    logic.globalDict["freeze"] = True
     f = open('output' + str(logic.globalDict["randNum"]) + '.json','a')
     f.write(logic.globalDict["saveString"])
     f.close()
