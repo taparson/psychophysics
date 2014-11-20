@@ -53,26 +53,26 @@ class Processor(blender_cave.processor.Processor):
         super(Processor, self).__init__(parent, configuration)
         self._navigator = hc_nav.HCNav(parent)
 #        self._navigator.setPositionFactors(1, 20.0, 1.0)
-        self.show_laser = 1
+        # self.show_laser = 1
 
         scene = bge.logic.getCurrentScene()
 
         self.controller = bge.logic.getCurrentController()
         self.body_transform = self.controller.actuators['body_transform']
-        self._ray_sensor   = self.controller.sensors['ray']
+        # self._ray_sensor   = self.controller.sensors['ray']
 #        self._laser_object = controller.owner
-        self._laser_object = scene.objects["Laser"]
-        self._laser_ray    = {'origin' : mathutils.Vector(),
-                              'destin' : mathutils.Vector(),
-                              'color'  : [1.0, 1.0, 1.0] }
-        self.shoot_dart = self._laser_object.actuators['Streamline']
+        # self._laser_object = scene.objects["Laser"]
+        # self._laser_ray    = {'origin' : mathutils.Vector(),
+        #                       'destin' : mathutils.Vector(),
+        #                       'color'  : [1.0, 1.0, 1.0] }
+        # self.shoot_dart = self._laser_object.actuators['Streamline']
 
-        scene.pre_draw.append(self.display_laser)
+        # scene.pre_draw.append(self.display_laser)
 
         camera                              = scene.active_camera
-        self._laser_object.worldPosition    = camera.worldPosition
-        self._laser_object.worldOrientation = camera.worldOrientation
-        self._laser_object.setParent(camera)
+        # self._laser_object.worldPosition    = camera.worldPosition
+        # self._laser_object.worldOrientation = camera.worldOrientation
+        # self._laser_object.setParent(camera)
 
         if (self.getBlenderCave().getVersion() >= 3.0) and (self.getBlenderCave().isMaster()):
             self.getBlenderCave().getSceneSynchronizer().getItem(bge.logic).activate(True, True)
@@ -90,10 +90,10 @@ class Processor(blender_cave.processor.Processor):
 #                self._navigator.update(self._navigator.RESET, user)
 #                user.resetVehiclePosition()
 
-    def buttons(self, info):
-        if info['button'] == 1:
-            if info['state'] == 1:
-              self.controller.activate(self.shoot_dart)
+    # def buttons(self, info):
+    #     if info['button'] == 1:
+    #         if info['state'] == 1:
+    #           self.controller.activate(self.shoot_dart)
 #              self._laser_object["show_ray"] = 1
 #            elif info['state'] == 0:
 #              self._laser_object["show_ray"] = 0
@@ -138,21 +138,21 @@ class Processor(blender_cave.processor.Processor):
 #            for user in info['users']:
 #                self._navigator.update(cmd, user)
 
-    def tracker_1(self, info):
-        self._laser_object.localPosition    = info['matrix'].to_translation()
-        self._laser_object.localOrientation = info['matrix'].to_3x3() * mathutils.Matrix.Rotation(radians(-90.0), 3, 'X')
+    # def tracker_1(self, info):
+    #     self._laser_object.localPosition    = info['matrix'].to_translation()
+    #     self._laser_object.localOrientation = info['matrix'].to_3x3() * mathutils.Matrix.Rotation(radians(-90.0), 3, 'X')
 
-    def run(self):
-        ray_vec = mathutils.Vector(self._ray_sensor.rayDirection)
-        ray_vec.magnitude = self._ray_sensor.range
+    # def run(self):
+    #     ray_vec = mathutils.Vector(self._ray_sensor.rayDirection)
+    #     ray_vec.magnitude = self._ray_sensor.range
 
-        self._laser_ray['origin'] = mathutils.Vector(self._laser_object.worldPosition)
+    #     self._laser_ray['origin'] = mathutils.Vector(self._laser_object.worldPosition)
 
-        if self._ray_sensor.positive:
-            hit_vec = mathutils.Vector(self._ray_sensor.hitPosition)
-            ray_vec = hit_vec - self._laser_ray['origin']
+    #     if self._ray_sensor.positive:
+    #         hit_vec = mathutils.Vector(self._ray_sensor.hitPosition)
+    #         ray_vec = hit_vec - self._laser_ray['origin']
 
-        self._laser_ray['destin'] = self._laser_ray['origin'] + ray_vec
+    #     self._laser_ray['destin'] = self._laser_ray['origin'] + ray_vec
 
 #    def console(self, information):
 #        try:
@@ -166,12 +166,12 @@ class Processor(blender_cave.processor.Processor):
 #            pass
 
 
-    def display_laser(self):
-      if self._laser_object['show_ray'] == 1:
-        bgl.glColor3f(self._laser_ray['color'][0], self._laser_ray['color'][1], self._laser_ray['color'][2])
-        bgl.glLineWidth(1.0)
+    # def display_laser(self):
+    #   if self._laser_object['show_ray'] == 1:
+    #     bgl.glColor3f(self._laser_ray['color'][0], self._laser_ray['color'][1], self._laser_ray['color'][2])
+    #     bgl.glLineWidth(1.0)
 
-        bgl.glBegin(bgl.GL_LINES)
-        bgl.glVertex3f(self._laser_ray['origin'].x, self._laser_ray['origin'].y, self._laser_ray['origin'].z)
-        bgl.glVertex3f(self._laser_ray['destin'].x, self._laser_ray['destin'].y, self._laser_ray['destin'].z)
-        bgl.glEnd()
+    #     bgl.glBegin(bgl.GL_LINES)
+    #     bgl.glVertex3f(self._laser_ray['origin'].x, self._laser_ray['origin'].y, self._laser_ray['origin'].z)
+    #     bgl.glVertex3f(self._laser_ray['destin'].x, self._laser_ray['destin'].y, self._laser_ray['destin'].z)
+    #     bgl.glEnd()
