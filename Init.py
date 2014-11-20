@@ -3,6 +3,7 @@ from random import randrange
 import random
 
 def init():
+    logic.globalDict["randNum"] = randrange(0,1000)
     random.seed(0)
     logic.globalDict["saveString"] = '{"trials":['
     positions = []
@@ -67,7 +68,6 @@ def init():
     logic.globalDict["prev_pos"] = (0,0)
     logic.globalDict["hacky_bool"] = True
     logic.globalDict["freeze"] = True
-    logic.globalDict["randNum"] = randrange(0,1000)
     
     print("hello")
     trial()
