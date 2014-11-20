@@ -74,6 +74,9 @@ def init():
     
 def trial():
     logic.globalDict["freeze"] = True
+    s = logic.globalDict["saveString"]
+    if not "game_start" in logic.globalDict:
+        return
     if not logic.globalDict["hacky_bool"]:
         logic.globalDict["hacky_bool"] = True
         return
@@ -81,16 +84,13 @@ def trial():
     if logic.globalDict["trial_number"] == 0:
         logic.globalDict["hacky_bool"] = True
     else:
-        s = logic.globalDict["saveString"]
-        logic.globalDict["saveString"] = s[:-1]
-        logic.globalDict["saveString"] += ']'
-    if not "game_start" in logic.globalDict:
-        return
+        s = s[:-1]
+        s += ']'
     logic.globalDict["trial_number"] += 1
     if logic.globalDict["trial_number"] > 2:
-        logic.globalDict["saveString"] += '}]}'
+        s += '}]}'
         f = open('output'+str(logic.globalDict["randNum"]) + '.json', 'a')
-        f.write(logic.globalDict["saveString"])
+        f.write(s)
         f.close()
         logic.endGame()
         return
@@ -98,7 +98,8 @@ def trial():
     obj = controller.owner
     print("here! trial " + str(logic.globalDict["trial_number"])) 
     if logic.globalDict["trial_number"] != 1:
-        logic.globalDict["saveString"] += '},'
+        s += '},'
+    logic.globalDict["saveString"] = ""
     logic.globalDict["saveString"] += '{"number":' + str(logic.globalDict["trial_number"]) + ','
     logic.globalDict["saveString"] += '"obstacles": ['
     
@@ -138,7 +139,6 @@ def trial():
     logic.globalDict["prev_pos"] = (0,0)
     camera["timer"] = 0
     f = open('output' + str(logic.globalDict["randNum"]) + '.json','a')
-    f.write(logic.globalDict["saveString"])
+    f.write(s)
     f.close()
-    logic.globalDict["saveString"] = ""
         
