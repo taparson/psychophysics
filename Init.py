@@ -66,6 +66,7 @@ def init():
     logic.globalDict["prev_pos"] = (0,0)
     logic.globalDict["hacky_bool"] = True
     logic.globalDict["freeze"] = True
+    logic.globalDict["randNum"] = randrange(0,1000)
     
     print("hello")
     trial()
@@ -86,7 +87,7 @@ def trial():
     logic.globalDict["trial_number"] += 1
     if logic.globalDict["trial_number"] > 2:
         logic.globalDict["saveString"] += '}]}'
-        f = open('output.json', 'a')
+        f = open('output'+str(logic.globalDict["randNum"]) + '.json', 'a')
         f.write(logic.globalDict["saveString"])
         f.close()
         logic.endGame()
@@ -135,7 +136,7 @@ def trial():
     logic.globalDict["prev_pos"] = (0,0)
     camera["timer"] = 0
     logic.globalDict["freeze"] = True
-    f = open('output.json','a')
+    f = open('output' + str(logic.globalDict["randNum"]) + '.json','a')
     f.write(logic.globalDict["saveString"])
     f.close()
     logic.globalDict["saveString"] = ""
