@@ -87,7 +87,7 @@ def trial():
         s = s[:-1]
         s += ']'
     logic.globalDict["trial_number"] += 1
-    if logic.globalDict["trial_number"] > 2:
+    if logic.globalDict["trial_number"] > 48:
         s += '}]}'
         f = open('output'+str(logic.globalDict["randNum"]) + '.json', 'a')
         f.write(s)
