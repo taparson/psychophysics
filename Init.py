@@ -68,13 +68,11 @@ def init():
     logic.globalDict["prev_pos"] = (0,0)
     logic.globalDict["hacky_bool"] = True
     logic.globalDict["freeze"] = True
-    logic.globalDict["trial_start"] = False
     
     print("hello")
     trial()
     
 def trial():
-    logic.globalDict["trial_start"] = False
     logic.globalDict["freeze"] = True
     s = logic.globalDict["saveString"]
     if not "game_start" in logic.globalDict:
@@ -89,7 +87,7 @@ def trial():
         s = s[:-1]
         s += ']'
     logic.globalDict["trial_number"] += 1
-    if logic.globalDict["trial_number"] > 48: #number of trials
+    if logic.globalDict["trial_number"] > 2:
         s += '}]}'
         f = open('output'+str(logic.globalDict["randNum"]) + '.json', 'a')
         f.write(s)
@@ -132,10 +130,10 @@ def trial():
     #objList["A1"].visible = False
     #print(objList["A1"].visible)
     objList["Bounds"].position = [0,0,3]
-    # objList["Body"].position = [0,0,7]
-    # objList["Body"].orientation = [0,0,0]
+    objList["Body"].position = [0,0,7]
+    objList["Body"].orientation = [0,0,0]
     camera = objList["Camera"]
-    # camera.orientation = [1.57,0,0]
+    camera.orientation = [1.57,0,0]
         
     logic.globalDict["prev_time"] = 0
     logic.globalDict["prev_pos"] = (0,0)
@@ -143,4 +141,5 @@ def trial():
     f = open('output' + str(logic.globalDict["randNum"]) + '.json','a')
     f.write(s)
     f.close()
+    logic.globalDict["trial_start"] = True
         
