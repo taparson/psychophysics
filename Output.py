@@ -15,19 +15,11 @@ def outputData():
     objList = scene.objects
     body = objList["Body"]
     
-    if logic.globalDict["trial_start"] == False:
-        logic.globalDict["trial_start"] = True
-        objList["Body"].position = [0,0,7]
-        objList["Body"].orientation = [0,0,0]
-        camera = objList["Camera"]
-        camera.orientation = [1.57,0,0]
-        return
-
     if logic.globalDict["freeze"]:
         if camera["timer"] > 3:
             logic.globalDict["freeze"] = False
             camera["timer"] = 0
-        body.position = [0,0,7]
+        body.position = [0,0,.7]
         body.orientation = [0,0,0]
         camera.orientation = [1.57,0,0]
         return
